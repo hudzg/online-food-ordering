@@ -12,6 +12,7 @@ import { store } from "./component/State/store";
 import { useEffect } from "react";
 import { getUser } from "./component/State/Authentication/Action";
 import { findCart } from "./component/State/Cart/Action";
+import Routers from "./Routers/Routers";
 
 function App() {
   const { auth } = useSelector((store) => store);
@@ -27,7 +28,7 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline></CssBaseline>
-      <CustomerRoute />
+      <Routers />
     </ThemeProvider>
   );
 }
