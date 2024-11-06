@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Admin from "../AdminComponent/Admin/Admin";
-import CreateRestaurantForm from "../AdminComponent/CreateRestaurantForm.jsx/CreateRestaurantForm";
+import CreateRestaurantForm from "../AdminComponent/CreateRestaurantForm/CreateRestaurantForm";
 
 const AdminRoute = () => {
   return (
