@@ -5,6 +5,8 @@ import Grid from "@mui/material/Grid2";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import { useDispatch, useSelector } from "react-redux";
+import { createEvent } from "../../component/State/Restaurant/Action";
 
 const style = {
   position: "absolute",
@@ -22,6 +24,12 @@ const Events = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const { restaurant, ingredient, restaurantOrder } = useSelector(
+    (store) => store
+  );
+  const jwt = localStorage.getItem("jwt");
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     image: "",
@@ -44,6 +52,13 @@ const Events = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submit", formData);
+    dispatch(
+      createEvent({
+        data: formData,
+        jwt,
+        restaurantId: restaurant.userRestaurant?.id,
+      })
+    );
   };
   return (
     <div>

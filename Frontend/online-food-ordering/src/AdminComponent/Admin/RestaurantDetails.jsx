@@ -3,23 +3,34 @@ import { Button, Card, CardContent, CardHeader } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import { useDispatch, useSelector } from "react-redux";
+import { updateRestaurantStatus } from "../../component/State/Restaurant/Action";
 
 const RestaurantDetails = () => {
-  const handleRestaurantStatus = () => {};
+  const { restaurant } = useSelector((store) => store);
+  const dispatch = useDispatch();
+  const handleRestaurantStatus = () => {
+    dispatch(
+      updateRestaurantStatus({
+        restaurantId: restaurant.userRestaurant.id,
+        jwt: localStorage.getItem("jwt"),
+      })
+    );
+  };
   return (
     <div className="lg:px-20 px-5">
       <div className="py-5 flex justify-center items-center gap-5">
         <h1 className="text-2xl lg:text-7xl text-center font-bold p-5">
-          Vietnam Fast Food
+          {restaurant.userRestaurant?.name}
         </h1>
         <div>
           <Button
-            color={true ? "primary" : "error"}
+            color={!restaurant.userRestaurant?.open ? "primary" : "error"}
             className="py-[1rem] px-[2rem]"
             variant="contained"
             onClick={handleRestaurantStatus}
           >
-            {true ? "close" : "open"}
+            {restaurant.userRestaurant?.open ? "close" : "open"}
           </Button>
         </div>
       </div>
@@ -35,7 +46,7 @@ const RestaurantDetails = () => {
                   <p className="w-48">Owner</p>
                   <p className="text-gray-400">
                     <span className="pr-5">-</span>
-                    hudzg
+                    {restaurant.userRestaurant?.owner.fullName}
                   </p>
                 </div>
 
@@ -43,7 +54,7 @@ const RestaurantDetails = () => {
                   <p className="w-48">Restaurant Name</p>
                   <p className="text-gray-400">
                     <span className="pr-5">-</span>
-                    hudzg
+                    {restaurant.userRestaurant?.name}
                   </p>
                 </div>
 
@@ -51,7 +62,7 @@ const RestaurantDetails = () => {
                   <p className="w-48">Cuisine Type</p>
                   <p className="text-gray-400">
                     <span className="pr-5">-</span>
-                    hudzg
+                    {restaurant.userRestaurant?.cuisineType}
                   </p>
                 </div>
 
@@ -59,7 +70,7 @@ const RestaurantDetails = () => {
                   <p className="w-48">Opening Hours</p>
                   <p className="text-gray-400">
                     <span className="pr-5">-</span>
-                    hudzg
+                    {restaurant.userRestaurant?.openingHours}
                   </p>
                 </div>
 
@@ -67,13 +78,13 @@ const RestaurantDetails = () => {
                   <p className="w-48">Status</p>
                   <p className="text-gray-400">
                     <span className="pr-5">-</span>
-                    {true ? (
+                    {restaurant.userRestaurant?.open ? (
                       <span className="px-5 py-2 rounded-full bg-green-400 text-gray-950">
                         Open
                       </span>
                     ) : (
                       <span className="px-5 py-2 rounded-full bg-red-400 text-gray-950">
-                        Close
+                        Closed
                       </span>
                     )}
                   </p>
@@ -135,7 +146,7 @@ const RestaurantDetails = () => {
                   <p className="w-48">Email</p>
                   <p className="text-gray-400">
                     <span className="pr-5">-</span>
-                    hudzg
+                    {restaurant.userRestaurant?.contactInformation.email}
                   </p>
                 </div>
 
@@ -143,7 +154,7 @@ const RestaurantDetails = () => {
                   <p className="w-48">Mobile</p>
                   <p className="text-gray-400">
                     <span className="pr-5">-</span>
-                    hudzg
+                    {restaurant.userRestaurant?.contactInformation.mobile}
                   </p>
                 </div>
 
@@ -151,10 +162,18 @@ const RestaurantDetails = () => {
                   <p className="w-48">Social</p>
                   <p className="text-gray-400 flex items-center pb-3 gap-2">
                     <span className="pr-5">-</span>
-                    <a href="/">
+                    <a
+                      href={
+                        restaurant.userRestaurant?.contactInformation.instagram
+                      }
+                    >
                       <InstagramIcon sx={{ fontSize: "3rem" }} />
                     </a>
-                    <a href="/">
+                    <a
+                      href={
+                        restaurant.userRestaurant?.contactInformation.instagram
+                      }
+                    >
                       <FacebookIcon sx={{ fontSize: "3rem" }} />
                     </a>
                   </p>

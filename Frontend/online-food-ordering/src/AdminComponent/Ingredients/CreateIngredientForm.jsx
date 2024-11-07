@@ -7,19 +7,24 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createIngredient } from "../../component/State/Ingredient/Action";
 
 const CreateIngredientForm = () => {
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  const { restaurant, ingredient } = useSelector((store) => store);
   const [formData, setFormData] = useState({
     name: "",
-    ingredientCategoryId: "",
+    categoryId: "",
   });
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const data = {
-      name: formData.categoryName,
-      restaurantId: {
-        id: 1,
-      },
+      ...formData,
+      restaurantId: restaurant.userRestaurant.id,
     };
+    dispatch(createIngredient({ data, jwt }));
     console.log(data);
   };
   const handleInputChange = (e) => {
@@ -34,34 +39,35 @@ const CreateIngredientForm = () => {
     <div>
       <div className="p-5">
         <h1 className="text-gray-400 text-center text-xl pb-10">
-          Create Ingredients
+          Create Ingredient
         </h1>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <TextField
             fullWidth
             id="name"
             name="name"
-            label="Ingredient"
+            label="Name"
             variant="outlined"
             onChange={handleInputChange}
             value={formData.name}
           ></TextField>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Is Seasonal</InputLabel>
+            <InputLabel id="demo-simple-select-label">Category</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={formData.ingredientCategoryId}
-              label="Is Seasonal"
+              value={formData.categoryId}
+              label="Category"
               onChange={handleInputChange}
-              name="ingredientCategoryId"
+              name="categoryId"
             >
-              <MenuItem value={true}>Yes</MenuItem>
-              <MenuItem value={false}>No</MenuItem>
+              {ingredient.category.map((item) => (
+                <MenuItem value={item.id}>{item.name}</MenuItem>
+              ))}
             </Select>
           </FormControl>
           <Button variant="contained" type="submit">
-            Create Category
+            Create Ingredient
           </Button>
         </form>
       </div>

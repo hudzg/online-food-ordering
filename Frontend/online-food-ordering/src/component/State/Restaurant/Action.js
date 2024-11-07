@@ -24,6 +24,9 @@ import {
   GET_RESTAURANT_BY_ID_FAILURE,
   GET_RESTAURANT_BY_ID_REQUEST,
   GET_RESTAURANT_BY_ID_SUCCESS,
+  GET_RESTAURANT_BY_USER_ID_FAILURE,
+  GET_RESTAURANT_BY_USER_ID_REQUEST,
+  GET_RESTAURANT_BY_USER_ID_SUCCESS,
   GET_RESTAURANT_CATEGORY_FAILURE,
   GET_RESTAURANT_CATEGORY_REQUEST,
   GET_RESTAURANT_CATEGORY_SUCCESS,
@@ -69,6 +72,27 @@ export const getRestaurantById = (reqData) => async (dispatch) => {
     dispatch({ type: GET_RESTAURANT_BY_ID_FAILURE, payload: error });
   }
 };
+
+export const getRestaurantByUserId =
+  ({ jwt }) =>
+  async (dispatch) => {
+    dispatch({ type: GET_RESTAURANT_BY_USER_ID_REQUEST });
+    try {
+      const response = await api.get(`/api/admin/restaurants/user`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+      dispatch({
+        type: GET_RESTAURANT_BY_USER_ID_SUCCESS,
+        payload: response.data,
+      });
+      console.log("get restaurant by user id: ", response.data);
+    } catch (error) {
+      console.log("error", error);
+      dispatch({ type: GET_RESTAURANT_BY_USER_ID_FAILURE, payload: error });
+    }
+  };
 
 export const createRestaurant = (reqData) => async (dispatch) => {
   dispatch({ type: CREATE_RESTAURANT_REQUEST });
@@ -172,7 +196,7 @@ export const createEvent =
         type: CREATE_EVENTS_SUCCESS,
         payload: response.data,
       });
-      //   console.log("all restaurant: ", data);
+      console.log("createEvent ", response.data);
     } catch (error) {
       console.log("error", error);
       dispatch({ type: CREATE_EVENTS_FAILURE, payload: error });
@@ -247,7 +271,7 @@ export const createCategory =
         type: CREATE_CATEGORY_SUCCESS,
         payload: response.data,
       });
-      //   console.log("all restaurant: ", data);
+      console.log("createCategory: ", response.data);
     } catch (error) {
       console.log("error", error);
       dispatch({ type: CREATE_CATEGORY_FAILURE, payload: error });
@@ -271,7 +295,7 @@ export const getRestaurantCategory =
         type: GET_RESTAURANT_CATEGORY_SUCCESS,
         payload: response.data,
       });
-      //   console.log("all events: ", response.data);
+      console.log("getRestaurantCategory ", response.data);
     } catch (error) {
       console.log("error", error);
       dispatch({ type: GET_RESTAURANT_CATEGORY_FAILURE, payload: error });

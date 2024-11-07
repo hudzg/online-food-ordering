@@ -51,7 +51,7 @@ export const fetchRestaurantOrder =
         type: GET_RESTAURANT_ORDER_SUCCESS,
         payload: response.data,
       });
-      //   console.log("all restaurant: ", data);
+      console.log("fetchRestaurantOrder ", response.data);
     } catch (error) {
       console.log("error", error);
       dispatch({ type: GET_RESTAURANT_ORDER_FAILURE, payload: error });

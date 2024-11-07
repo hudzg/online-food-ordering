@@ -17,7 +17,7 @@ import {
   UPDATE_MENU_ITEMS_AVAILABILITY_SUCCESS,
 } from "./ActionType";
 
-export const createMenu =
+export const createMenuItem =
   ({ menu, jwt }) =>
   async (dispatch) => {
     dispatch({ type: CREATE_MENU_ITEM_REQUEST });
@@ -28,7 +28,7 @@ export const createMenu =
         },
       });
       dispatch({ type: CREATE_MENU_ITEM_SUCCESS, payload: data });
-      //   console.log("all restaurant: ", data);
+      console.log("createMenuItem: ", data);
     } catch (error) {
       console.log("error", error);
       dispatch({ type: CREATE_MENU_ITEM_FAILURE, payload: error });

@@ -30,6 +30,7 @@ export const getIngredientsOfRestaurant =
         type: GET_INGREDIENT,
         payload: response.data,
       });
+      console.log("getIngredientsOfRestaurant ", response.data);
     } catch (error) {
       console.log("error", error);
       //   dispatch({ type: GET_RESTAURANT_ORDER_FAILURE, payload: error });
@@ -50,7 +51,7 @@ export const createIngredient =
         type: CREATE_INGREDIENT_SUCCESS,
         payload: response.data,
       });
-      //   console.log("all restaurant: ", data);
+      console.log("createIngredient ", response.data);
     } catch (error) {
       console.log("error", error);
       dispatch({ type: CREATE_INGREDIENT_FAILURE, payload: error });
@@ -95,7 +96,7 @@ export const getIngredientCategory =
         type: GET_INGREDIENT_CATEGORY_SUCCESS,
         payload: response.data,
       });
-      //   console.log("all restaurant: ", data);
+      console.log("getIngredientCategory ", response.data);
     } catch (error) {
       console.log("error", error);
       dispatch({ type: GET_INGREDIENT_CATEGORY_FAILURE, payload: error });
